@@ -1,0 +1,28 @@
+require("../phpmailer/PHPMailerAutoload.php");
+	        $mail = new PHPMailer();
+	        $mail->IsSMTP();                                      // set mailer to use SMTP
+	        $mail->SMTPAuth = true;     // turn on SMTP authentication
+	        $mail->SMTPSecure = "tls";
+	        $mail->SMTPDebug  = 2; 
+	        $mail->Debugoutput = 'html';
+	        $mail->Host = "smtp.office365.com";  // specify main and backup server
+	        $mail->Port        = 587;
+	        $mail->Username = "a@b.com";  // SMTP username
+	        $mail->Password = "******"; // SMTP password
+	        $mail->From = "noreply@yahire.com";
+	        $mail->FromName = "Discounts";
+	        $mail->AddAddress("$managerEmail");        // name is optional
+	        $mail->WordWrap = 50;                                 // set word wrap to 50 characters
+	        $mail->IsHTML(true);                                  // set email format to HTML
+	        $mail->Subject = "Customer Accepted Your Discounted Price.";
+
+	        $mail->Body = " <p>$managerName, the customer accepted the offer price you gave on quote <b>$quoteNo</b>. It has now been added to the archive.</p>";
+	        $mail->AltBody = "<p>$managerName, the customer accepted the offer price you gave on quote <b>$quoteNo</b>. It has now been added to the archive.</p>";
+	        
+		        if(!$mail->Send())
+		        {
+		        	echo $salesEmail;
+		           echo "Message could not be sent. <p>";
+		           echo "Mailer Error: " . $mail->ErrorInfo;
+		           exit;
+		        }
