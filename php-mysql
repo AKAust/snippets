@@ -1,0 +1,52 @@
+
+//INSERT
+if (!mysqli_query($conn,"INSERT INTO accountPayments (payment_ID, invNo, contNo, acNo, paymentDate, amtPaid, s_ID)
+    VALUES ('$payment_ID', '$invNo', '$contNo', '$acNo', '$paymentDate', '$amtPaid', '$s_ID')"))
+      {
+        header('HTTP/1.1 500 Internal Server Booboo');
+         header('Content-Type: application/json; charset=UTF-8');
+          die(json_encode(array('Error Adding To Database:' => 'SQL ERROR', mysqli_error($conn) => 1337)));
+
+      }
+      else{
+        echo "Successfully Added Payment";
+
+          }
+      }
+
+
+//SELECT Loop
+$sql="SELECT email FROM salesPerson WHERE s_ID='$s_ID'";
+	
+	$result3 = $conn->query($sql);
+	    if ($result3->num_rows > 0) {
+	      while($row = $result3->fetch_assoc()) {
+
+	      $salesEmail = $row['email'];
+
+
+	    }
+	}
+  mysqli_free_result($result3);
+
+
+  //UPDATE
+  if (!mysqli_query($conn,"UPDATE discounts SET state='$state', offerPrice='$offerPrice', state='$state', managerID='$managerID', authID='$authID' WHERE reqID='$reqID'"))
+	      {
+	        header('HTTP/1.1 500 Internal Server Booboo');
+	        header('Content-Type: application/json; charset=UTF-8');
+	        die(json_encode(array('Request Not Updated' => 'There was an SQL Database problem. Leave on the screen and speak to Austin', 'code ' => 1337)));
+	      }
+	      else{
+	        echo "Successfully Updated Discount";
+          }
+ //DELETE
+ if (!mysqli_query($conn,"DELETE FROM discounts WHERE reqID='$reqID'")) {
+	      	header('HTTP/1.1 500 Internal Server Booboo');
+	        header('Content-Type: application/json; charset=UTF-8');
+	        die(json_encode(array('Error Deleting Original Discount' => 'There was an SQL Database Delete problem On The Original Database. Leave on the screen and speak to Austin', 'code ' => 1337)));
+	      }
+
+	      else{
+	        echo "Successfully Archived Discount";
+          
