@@ -1,0 +1,44 @@
+$("form#getDistance").submit(function(event) {
+
+
+    //disable the default form submission
+    event.preventDefault();
+
+    //grab all form data
+    var formData = new FormData($(this)[0]);
+
+    $.ajax({
+            url: 'model/distance.php',
+            type: 'POST',
+            data: formData,
+            async: false,
+            cache: false,
+            contentType: false,
+            processData: false,
+        })
+        .done(function(response) {
+            $('div#success').show().delay(3000).fadeOut("slow");
+            if (response.hasOwnProperty('Match') > -1) {
+                $('#distance').html("");
+                $('#duration').html("");
+                $('#address').html("<b>Standard Postcode Match Found</b>");
+            }
+            if (response.hasOwnProperty("destination_addresses") > -1) {
+                var googleresponse = JSON.parse(response);
+                var distance = Math.round((googleresponse["rows"][0]["elements"][0]["distance"]["value"] / 1000) * 0.621371);
+                $('#distance').html("Distance: <b>" + distance + " Miles</b>");
+                var duration = googleresponse["rows"][0]["elements"][0]["duration_in_traffic"]["text"];
+                $('#duration').html("Duration in current traffic: <b>" + duration + "</b>");
+                var address = googleresponse["destination_addresses"][0];
+                $('#address').html("Address: <b>" + address + "</b>");
+            }
+
+        })
+        .fail(function(xhr, textStatus, errorThrown) {
+            $('#errormessage').html(xhr.responseText);
+            $('div#errorMsg').show().delay(7000).fadeOut("slow");
+        })
+
+
+
+});
