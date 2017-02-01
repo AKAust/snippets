@@ -1,0 +1,46 @@
+<div class="container">
+  <table class='tablesorter-bootstrap table-hover table-condensed  table-striped' id="aTable" style="width:100%"><thead class="tablesorter-header">
+  <thead class="tablesorter-header"><th>ID</th><th>Employee Name</th><th>Department</th><th>Amount To Pay</th></thead>
+<tr>
+<?php
+session_start();
+$conn = new mysqli(DB_HOST1, DB_USER1, DB_PASS1, DB_NAME1);
+
+//get unique employee ID's from the requests table
+$sql = "SELECT DISTINCT(e_ID) AS e_ID, employeeName, dept  FROM bonusRequests WHERE state='AUTHORISED' ";
+
+$result = $conn->query($sql);
+$nameArray = array();
+while($row = mysqli_fetch_array($result)) {
+    // Append to the array
+    $idArray['e_ID'] = $row['e_ID'];
+    $idArray['employeeName'] = $row['employeeName'];
+    $idArray['dept'] = $row['dept'];
+    $e_ID = $idArray['e_ID'];
+// Calculate bonus owed for each employee (for each employee in the db)
+foreach ($idArray as $key => $val) {
+
+
+		$sql2 = "SELECT reqAmt FROM bonusRequests WHERE e_ID='$e_ID' AND state='AUTHORISED' ";
+
+		$result2 = $conn->query($sql2);
+		$amtArray = array();
+		while($row2 = mysqli_fetch_array($result2)) {
+		    // Append to the array
+		  $amtArray[] = $row2;
+		}
+		// Calculate bonus owed for each employee (for each employee in the db)
+
+}
+?>
+
+<td><?php echo $e_ID; ?></td> <td><?php echo $idArray['employeeName']; ?></td><td><?php echo $idArray['dept']; ?></td> <td><?php echo array_sum(array_column($amtArray, 'reqAmt')); ?></td>
+</tr>
+<?php }?>
+
+
+
+
+
+</table>
+</div>
