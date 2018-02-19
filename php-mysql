@@ -49,4 +49,17 @@ $sql="SELECT email FROM salesPerson WHERE s_ID='$s_ID'";
 
 	      else{
 	        echo "Successfully Archived Discount";
-          
+
+
+// search for any instance of employee ID where database field could be multiple values containing 14 (such as 14,10,120) or a single number (such as 14) and so on any of these would be counted if looking for 14 this prevents doing an explode and iterating
+$sql5="SELECT * From nonConformance WHERE (',' + RTRIM(employee) + ',') = '%,' + $employeeID + ',%'";
+        $result3 = $conn->query($sql5);
+        $ncrCount=0;
+	    if ($result3->num_rows > 0) {
+	      while($row = $result3->fetch_assoc()) {
+
+	      $ncrCount++;
+
+
+	    	}
+		}
