@@ -1,0 +1,5 @@
+$(function() {
+  var pathArray = location.pathname.split('/');//split URL into segments
+  var segment_2 = pathArray[2];//seect the second subdirectory to set the active class to
+  $('.nav-item a[href^="/new-system/' + segment_2 + '"]').addClass('active');// set active class on any url within the subdirectory
+});
