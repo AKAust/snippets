@@ -1,0 +1,10 @@
+//TO GRAB ONE PART OF A RELATION
+public function getLastOrderLineStat()
+{
+    return $this->hasOne(OrdersLinesStats::className(), ['lineID' => 'id'])
+        ->orderBy(['id'=>SORT_DESC])
+        ->groupBy('lineID')
+        ->via('ordersLines');
+}
+If $model is an OrdersModel instance, you obtain the last stat row using:
+$model->lastOrderLineStat
