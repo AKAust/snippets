@@ -5,15 +5,10 @@ UNZIPPING FILES
 unzip myzip.zip
 
 TAKING OWNERSHIP
-sudo chown -R bitnami:daemon /opt/bitnami/apps/joomla/htdocs/
-sudo chown -R bitnami:daemon /opt/bitnami/apps/joomla/logs
-sudo chown -R bitnami:daemon /opt/bitnami/apps/joomla/tmp/
-sudo find  /opt/bitnami/apps/joomla/htdocs/ -type d -exec chmod 0775 {} \;
-sudo find  /opt/bitnami/apps/joomla/htdocs/ -type f -exec chmod 0664 {} \;
-sudo find  /opt/bitnami/apps/joomla/logs -type d -exec chmod 0775 {} \;
-sudo find  /opt/bitnami/apps/joomla/logs -type f -exec chmod 0664 {} \;
-sudo find  /opt/bitnami/apps/joomla/tmp -type d -exec chmod 0775 {} \;
-sudo find  /opt/bitnami/apps/joomla/tmp -type f -exec chmod 0664 {} \;
+sudo chown -R bitnami:daemon /opt/bitnami/apache2/htdocs
+
+sudo find  /opt/bitnami/apache2/htdocs -type d -exec chmod 0775 {} \;
+sudo find  /opt/bitnami/apache2/htdocs -type f -exec chmod 0664 {} \;
 
 
 GETTING BITNAMI APP PASSWORD
